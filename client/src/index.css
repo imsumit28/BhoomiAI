@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gov-primary: #17324D;
+  --gov-blue: #046A38;
+  --gov-saffron: #FF9933;
+  --gov-green: #046A38;
+}
+
+body {
+  margin: 0;
+  background-color: #F4F6F8;
+  color: #0F172A;
+  font-family: 'Inter', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(255, 103, 31, 0.18); }
+
+/* National Tricolor Top Stripe */
+.tricolor-bar {
+  background: linear-gradient(90deg, #FF9933 0%, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%, #138808 100%);
+  height: 4px;
+  width: 100%;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Document Viewer Bounding Box Highlights */
+.bounding-box-overlay {
+  position: absolute;
+  border: 2px solid #3B82F6;
+  background-color: rgba(59, 130, 246, 0.15);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-radius: 2px;
+}
+
+.bounding-box-overlay:hover,
+.bounding-box-overlay.active {
+  border-color: #EF4444;
+  background-color: rgba(239, 68, 68, 0.25);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+  z-index: 20;
+}
+
+.bounding-box-overlay.low-confidence {
+  border-color: #F59E0B;
+  background-color: rgba(245, 158, 11, 0.2);
+}
+
+.bounding-box-overlay.critical-issue {
+  border-color: #DC2626;
+  background-color: rgba(220, 38, 38, 0.25);
+}
+
+/* Pulse animation for live updates */
+@keyframes softPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.animate-soft-pulse {
+  animation: softPulse 2.5s infinite ease-in-out;
+}
