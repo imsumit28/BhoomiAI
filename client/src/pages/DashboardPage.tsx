@@ -32,6 +32,7 @@ import { DashboardStats } from '../../../shared/types';
 import { ValidationBadge, VerificationBadge } from '../components/common/ValidationBadge';
 import { ConfidenceBadge } from '../components/common/ConfidenceBadge';
 import { useLanguage } from '../context/LanguageContext';
+import { PrototypeShowcaseSection } from '../components/dashboard/PrototypeShowcaseSection';
 
 interface DashboardPageProps {
   onNavigate: (tab: string, contextId?: string) => void;
@@ -69,7 +70,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onStar
           <div className="max-w-3xl">
             <p className="text-xs font-semibold tracking-wide text-[#046A38] mb-1.5">Department of Land Resources</p>
             <h1 className="text-2xl sm:text-[28px] leading-tight font-bold tracking-tight text-[#17324D]">
-              BhoomiAI — Intelligent Land Record Digitization & Validation
+              Bhoomi Setu AI — Intelligent Land Record Digitization & Validation
             </h1>
             <p className="text-sm text-slate-600 max-w-2xl mt-2 leading-6">
               Automating legacy land records ingestion with deep Indic OCR, multi-rule validation engine, and human-in-the-loop audit verification.
@@ -104,6 +105,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onStar
           </div>
         </div>
       </div>
+
+      <PrototypeShowcaseSection onNavigate={onNavigate} />
 
       {/* Top KPI Metrics Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

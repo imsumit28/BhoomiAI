@@ -25,7 +25,7 @@ function createField<T>(
 }
 
 export async function seedDatabase() {
-  console.log('🌱 Starting BhoomiAI Database Seed...');
+  console.log('🌱 Starting Bhoomi Setu AI Database Seed...');
 
   // Drop database to reset indexes and clean seed
   try {
@@ -865,7 +865,7 @@ export async function seedDatabase() {
       recordId: 'REC-MP-SEH-001',
       documentId: 'DOC-MP-2026-001',
       action: 'OCR_COMPLETED',
-      performedBy: { userId: 'sys-ocr', name: 'BhoomiAI Hybrid Indic-OCR', role: 'admin', email: 'ocr-engine@bhoomi.gov.in' },
+      performedBy: { userId: 'sys-ocr', name: 'Bhoomi Setu AI Hybrid Indic-OCR', role: 'admin', email: 'ocr-engine@bhoomi.gov.in' },
       details: 'OCR processed 14 text blocks with 96% overall confidence.',
       ipAddress: '127.0.0.1',
       timestamp: '2026-09-25T10:15:04Z',
@@ -875,7 +875,7 @@ export async function seedDatabase() {
       recordId: 'REC-MP-SEH-001',
       documentId: 'DOC-MP-2026-001',
       action: 'FIELDS_EXTRACTED',
-      performedBy: { userId: 'sys-ai', name: 'BhoomiAI Neural Entity Extractor', role: 'admin', email: 'ai-engine@bhoomi.gov.in' },
+      performedBy: { userId: 'sys-ai', name: 'Bhoomi Setu AI Neural Entity Extractor', role: 'admin', email: 'ai-engine@bhoomi.gov.in' },
       details: 'Extracted structured fields for Owner: Ramesh Kumar, Survey: 124/3, Area: 2.45 Acres.',
       ipAddress: '127.0.0.1',
       timestamp: '2026-09-25T10:15:08Z',
@@ -948,7 +948,7 @@ export async function seedDatabase() {
   await AuditLogModel.insertMany(auditLogsData as any);
   console.log(` Created ${auditLogsData.length} audit trail records.`);
 
-  console.log('✅ BhoomiAI Database Seeding completed successfully!');
+  console.log('✅ Bhoomi Setu AI Database Seeding completed successfully!');
 }
 
 if (require.main === module) {

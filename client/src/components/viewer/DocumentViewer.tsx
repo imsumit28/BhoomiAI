@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { ZoomIn, ZoomOut, RotateCcw, Eye, Layers, AlertTriangle } from 'lucide-react';
 import { BoundingBox } from '../../../../shared/types';
 import { ConfidenceBadge } from '../common/ConfidenceBadge';
@@ -26,11 +26,50 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
   onSelectField,
   documentTitle = 'मध्य प्रदेश शासन - प्रारूप खसरा (अधिकार अभिलेख)',
 }) => {
+  const paperRef = useRef<HTMLDivElement>(null);
+  const [displayedFieldBoxes, setDisplayedFieldBoxes] = useState<Record<string, { x: number; y: number; width: number; height: number }>>({});
   const [zoom, setZoom] = useState(1);
   const [showBoxes, setShowBoxes] = useState(true);
   const [highlightOnlyLowConf, setHighlightOnlyLowConf] = useState(false);
 
   const selectedField = fields.find((f) => f.id === selectedFieldId);
+
+  // The demo record is rendered as HTML, so OCR coordinates from a scanned
+  // source document do not describe this paper's layout. Measure the displayed
+  // values themselves to keep the interactive highlights attached to them.
+  useLayoutEffect(() => {
+    const paper = paperRef.current;
+    if (!paper) return;
+
+    const updateBoxes = () => {
+      const paperRect = paper.getBoundingClientRect();
+      if (!paperRect.width || !paperRect.height) return;
+
+      const next: typeof displayedFieldBoxes = {};
+      paper.querySelectorAll<HTMLElement>('[data-field-anchor]').forEach((anchor) => {
+        const rect = anchor.getBoundingClientRect();
+        const id = anchor.dataset.fieldAnchor;
+        if (!id || !rect.width || !rect.height) return;
+        next[id] = {
+          x: ((rect.left - paperRect.left) / paperRect.width) * 100,
+          y: ((rect.top - paperRect.top) / paperRect.height) * 100,
+          width: (rect.width / paperRect.width) * 100,
+          height: (rect.height / paperRect.height) * 100,
+        };
+      });
+      setDisplayedFieldBoxes(next);
+    };
+
+    updateBoxes();
+    const observer = new ResizeObserver(updateBoxes);
+    observer.observe(paper);
+    paper.querySelectorAll<HTMLElement>('[data-field-anchor]').forEach((anchor) => observer.observe(anchor));
+    window.addEventListener('resize', updateBoxes);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateBoxes);
+    };
+  }, [fields]);
 
   return (
     <div className="flex flex-col h-full bg-slate-900 rounded-xl border border-slate-700 overflow-hidden shadow-xl">
@@ -100,6 +139,7 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
       {/* Main Document Canvas Viewport */}
       <div className="relative flex-1 overflow-auto bg-slate-950 p-6 flex justify-center items-start min-h-[480px]">
         <div
+          ref={paperRef}
           className="relative transition-transform duration-200 origin-top shadow-2xl bg-[#FFFDF5] border border-amber-200/80 rounded-sm"
           style={{
             width: '680px',
@@ -159,13 +199,13 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
             <div className="grid grid-cols-2 gap-4 pb-4 border-b border-amber-900/20">
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">4. भूमि स्वामी का नाम (Owner Name):</span>
-                <span className="text-base font-bold text-slate-950 font-indic">
+                <span data-field-anchor="ownerName" className="text-base font-bold text-slate-950 font-indic">
                   {fields.find((f) => f.id === 'ownerName')?.value || 'रमेश कुमार (Ramesh Kumar)'}
                 </span>
               </div>
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">5. पिता / पति का नाम (Father/Spouse):</span>
-                <span className="text-base font-semibold text-slate-900 font-indic">
+                <span data-field-anchor="fatherOrSpouseName" className="text-base font-semibold text-slate-900 font-indic">
                   {fields.find((f) => f.id === 'fatherOrSpouseName')?.value || 'सुरेश कुमार (Suresh Kumar)'}
                 </span>
               </div>
@@ -174,19 +214,19 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
             <div className="grid grid-cols-3 gap-4 pb-4 border-b border-amber-900/20">
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">6. खसरा / सर्वे संख्या:</span>
-                <span className="text-base font-bold text-slate-950 font-mono">
+                <span data-field-anchor="surveyNumber" className="text-base font-bold text-slate-950 font-mono">
                   {fields.find((f) => f.id === 'surveyNumber')?.value || '124/3'}
                 </span>
               </div>
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">7. खाता संख्या:</span>
-                <span className="text-sm font-semibold text-slate-900 font-mono">
+                <span data-field-anchor="khataNumber" className="text-sm font-semibold text-slate-900 font-mono">
                   {fields.find((f) => f.id === 'khataNumber')?.value || '458'}
                 </span>
               </div>
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">8. कुल क्षेत्रफल (Area):</span>
-                <span className="text-base font-bold text-blue-900">
+                <span data-field-anchor="area" className="text-base font-bold text-blue-900">
                   {fields.find((f) => f.id === 'area')?.value || '2.45'} एकड़ (Acres)
                 </span>
               </div>
@@ -195,7 +235,7 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
             <div className="grid grid-cols-2 gap-4 pb-4 border-b border-amber-900/20">
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">9. भूमि का प्रकार / वर्गीकरण:</span>
-                <span className="text-sm font-semibold text-slate-900">
+                <span data-field-anchor="landClassification" className="text-sm font-semibold text-slate-900">
                   {fields.find((f) => f.id === 'landClassification')?.value || 'कृषि (Agricultural)'}
                 </span>
               </div>
@@ -210,13 +250,13 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
             <div className="grid grid-cols-2 gap-4 pb-4 border-b border-amber-900/20">
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">11. पंजीकरण विलेख क्रमांक:</span>
-                <span className="text-xs font-mono font-semibold text-slate-800">
+                <span data-field-anchor="registrationNumber" className="text-xs font-mono font-semibold text-slate-800">
                   {fields.find((f) => f.id === 'registrationNumber')?.value || 'REG-2022-8921'}
                 </span>
               </div>
               <div className="bg-amber-50/70 p-2.5 rounded border border-amber-200">
                 <span className="text-xs font-bold text-slate-600 block">12. नामांतरण पंजी क्रमांक व आदेश:</span>
-                <span className="text-xs font-mono font-semibold text-slate-800">
+                <span data-field-anchor="mutationNumber" className="text-xs font-mono font-semibold text-slate-800">
                   {fields.find((f) => f.id === 'mutationNumber')?.value || 'M-2023-1102'}
                 </span>
               </div>
@@ -239,13 +279,12 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
           {showBoxes && (
             <div className="absolute inset-0 pointer-events-none">
               {fields.map((field) => {
-                if (!field.boundingBox) return null;
+                const box = displayedFieldBoxes[field.id];
+                if (!box) return null;
                 const isSelected = selectedFieldId === field.id;
                 const isLowConf = field.confidence < 0.7;
 
                 if (highlightOnlyLowConf && !isLowConf) return null;
-
-                const box = field.boundingBox;
 
                 return (
                   <div
@@ -265,19 +304,13 @@ export const DocumentViewer: React.FC<DocumentViewerProps> = ({
                     } ${isLowConf ? 'low-confidence' : ''}`}
                   >
                     {/* Tooltip Tag */}
-                    <div
-                      className={`absolute -top-6 left-0 text-[10px] font-bold px-1.5 py-0.5 rounded shadow-md whitespace-nowrap flex items-center space-x-1 ${
-                        isSelected
-                          ? 'bg-rose-600 text-white ring-2 ring-rose-300 z-30'
-                          : isLowConf
-                          ? 'bg-amber-600 text-white z-20'
-                          : 'bg-blue-600 text-white'
-                      }`}
-                    >
-                      <span>{field.label}</span>
-                      <span>•</span>
-                      <span>{Math.round(field.confidence <= 1 ? field.confidence * 100 : field.confidence)}%</span>
-                    </div>
+                    {isSelected && (
+                      <div className="absolute -top-6 left-0 z-30 flex items-center space-x-1 rounded bg-rose-600 px-1.5 py-0.5 text-[10px] font-bold text-white shadow-md ring-2 ring-rose-300">
+                        <span>{field.label}</span>
+                        <span>•</span>
+                        <span>{Math.round(field.confidence <= 1 ? field.confidence * 100 : field.confidence)}%</span>
+                      </div>
+                    )}
                   </div>
                 );
               })}

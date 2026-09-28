@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { Header } from './components/common/Header';
@@ -21,6 +21,18 @@ export const AppContent: React.FC = () => {
   const [activeDocumentId, setActiveDocumentId] = useState<string>('DOC-MP-2026-001');
   const [activeRecordId, setActiveRecordId] = useState<string>('REC-MP-SEH-001');
   const [isDemoModalOpen, setIsDemoModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    if (tab) {
+      setActiveTab(tab);
+      const docId = params.get('doc');
+      if (docId) setActiveDocumentId(docId);
+      const recId = params.get('record');
+      if (recId) setActiveRecordId(recId);
+    }
+  }, []);
 
   const handleNavigate = (tab: string, contextId?: string) => {
     if (tab === 'processing' && contextId) {

@@ -99,7 +99,7 @@ export async function processDocumentPipeline(documentId: string, simulateNoise 
     action: 'OCR_COMPLETED',
     performedBy: {
       userId: user?.id || 'sys-ai',
-      name: user?.name || 'BhoomiAI OCR Engine',
+      name: user?.name || 'Bhoomi Setu AI OCR Engine',
       role: 'admin',
       email: 'ai-engine@bhoomi.gov.in',
     },
@@ -149,7 +149,7 @@ export async function processDocumentPipeline(documentId: string, simulateNoise 
     action: 'FIELDS_EXTRACTED',
     performedBy: {
       userId: user?.id || 'sys-ai',
-      name: user?.name || 'BhoomiAI Entity Extractor',
+      name: user?.name || 'Bhoomi Setu AI Entity Extractor',
       role: 'admin',
       email: 'ai-engine@bhoomi.gov.in',
     },

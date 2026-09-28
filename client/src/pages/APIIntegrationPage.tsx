@@ -18,7 +18,7 @@ export const APIIntegrationPage: React.FC = () => {
   const [testResponse, setTestResponse] = useState<string | null>(null);
   const [loadingTest, setLoadingTest] = useState(false);
 
-  const apiKey = 'bhoomi_live_sec_89f92a11b0c9e7829910d';
+  const apiKey = 'bhoomi_setu_ai_live_sec_89f92a11b0c9e7829910d';
 
   const endpoints = [
     {
@@ -136,7 +136,7 @@ export const APIIntegrationPage: React.FC = () => {
             <span className="text-xs text-slate-500">• Section 16 Integration Readiness</span>
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">
-            BhoomiAI REST API & Interoperability Gateway
+            Bhoomi Setu AI REST API & Interoperability Gateway
           </h1>
           <p className="text-xs text-slate-500 mt-1">
             Standardized interfaces for seamless integration with Bhulekh, PM-KISAN, NLRMP, e-Dharti, and state revenue registries.

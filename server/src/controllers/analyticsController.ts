@@ -82,7 +82,7 @@ export async function getLearningLoopMetrics(req: AuthRequest, res: Response) {
     const totalCorrections = await AuditLogModel.countDocuments({ action: 'FIELD_CORRECTED' });
 
     res.json({
-      activeModelVersion: 'BhoomiIndicNet-v2.4.2-Hyd',
+      activeModelVersion: 'BhoomiSetuIndicNet-v2.4.2-Hyd',
       lastTrainedDate: '2026-09-20',
       totalHumanCorrectionsCollected: totalCorrections + 4820,
       overallModelCorrectionRate: '6.4%',

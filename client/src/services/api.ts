@@ -11,7 +11,7 @@ import {
 const API_BASE = '/api';
 
 function getAuthHeaders(): HeadersInit {
-  const token = localStorage.getItem('bhoomi_token');
+  const token = localStorage.getItem('bhoomi_setu_ai_token');
   return {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -65,7 +65,7 @@ export const api = {
 
   // Documents & Pipeline
   async uploadDocument(formData: FormData) {
-    const token = localStorage.getItem('bhoomi_token');
+    const token = localStorage.getItem('bhoomi_setu_ai_token');
     const res = await fetch(`${API_BASE}/documents/upload`, {
       method: 'POST',
       headers: {

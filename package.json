@@ -1,13 +1,17 @@
 {
-  "name": "bhoomi-ai-monorepo",
+  "name": "bhoomi-setu-ai-monorepo",
   "version": "1.0.0",
-  "description": "BhoomiAI — Intelligent Land Record Digitization and Validation System (SIH26018)",
+  "description": "Bhoomi Setu AI — Intelligent Land Record Digitization and Validation System (SIH26018)",
   "scripts": {
     "install-all": "npm --prefix server install && npm --prefix client install",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
     "build": "npm --prefix server run build && npm --prefix client run build",
-    "seed": "npm --prefix server run seed"
+    "seed": "npm --prefix server run seed",
+    "capture-screenshots": "node scripts/capture-prototype-screenshots.mjs"
   },
-  "keywords": ["sih2026", "land-records", "digitization", "validation-engine", "bhoomi-ai"]
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  },
+  "keywords": ["sih2026", "land-records", "digitization", "validation-engine", "bhoomi-setu-ai"]
 }

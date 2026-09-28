@@ -1,7 +1,7 @@
 {
-  "name": "bhoomi-ai-server",
+  "name": "bhoomi-setu-ai-server",
   "version": "1.0.0",
-  "description": "BhoomiAI Backend - Intelligent Land Record Digitization and Validation Platform",
+  "description": "Bhoomi Setu AI Backend - Intelligent Land Record Digitization and Validation Platform",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",

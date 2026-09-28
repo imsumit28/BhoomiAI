@@ -6,7 +6,7 @@ let mongod: MongoMemoryServer | null = null;
 export async function connectDB(): Promise<void> {
   const uri = process.env.MONGODB_URI;
 
-  if (uri && uri !== 'mongodb://localhost:27017/bhoomi_ai') {
+  if (uri && uri !== 'mongodb://localhost:27017/bhoomi_setu_ai') {
     try {
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 3000 });
       console.log(' Connected to configured MongoDB:', uri);
@@ -18,7 +18,7 @@ export async function connectDB(): Promise<void> {
 
   // Try connecting to local MongoDB first if present
   try {
-    const localUri = uri || 'mongodb://127.0.0.1:27017/bhoomi_ai';
+    const localUri = uri || 'mongodb://127.0.0.1:27017/bhoomi_setu_ai';
     await mongoose.connect(localUri, { serverSelectionTimeoutMS: 2000 });
     console.log(' Connected to local MongoDB instance:', localUri);
   } catch {

@@ -218,7 +218,7 @@ export async function exportRecords(req: AuthRequest, res: Response) {
       const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
 
       res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-      res.setHeader('Content-Disposition', 'attachment; filename="bhoomi_land_records_export.csv"');
+      res.setHeader('Content-Disposition', 'attachment; filename="bhoomi_setu_ai_land_records_export.csv"');
       return res.send(csvContent);
     }
 

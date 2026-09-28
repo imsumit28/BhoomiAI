@@ -63,7 +63,7 @@ export const DemoScenarioGuideModal: React.FC<DemoScenarioGuideModalProps> = ({
       stepNumber: '04',
       title: '10-Rule Validation Engine & Cross-Record Title Graph',
       tag: 'Step 4: Rule Engine Execution',
-      desc: 'THE CORE DIFFERENTIATOR: BhoomiAI validates against 10 legal revenue rules. It detects that Survey 124/3 has a conflicting claim by "Dinesh Chandra" while registered under "Ramesh Kumar".',
+      desc: 'THE CORE DIFFERENTIATOR: Bhoomi Setu AI validates against 10 legal revenue rules. It detects that Survey 124/3 has a conflicting claim by "Dinesh Chandra" while registered under "Ramesh Kumar".',
       targetTab: 'validation',
       contextId: 'REC-MP-SEH-002',
       actionText: 'View Validation Diagnostics',

@@ -391,7 +391,7 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onNavigateToProcessing }
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
             <h3 className="text-sm font-bold text-slate-900 pb-2 border-b border-slate-100 flex items-center justify-between">
-              <span>BhoomiAI Pipeline Stages</span>
+              <span>Bhoomi Setu AI Pipeline Stages</span>
               {isUploading && (
                 <span className="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold animate-pulse">
                   Executing Stage {activeStep}/6
@@ -455,7 +455,7 @@ export const UploadPage: React.FC<UploadPageProps> = ({ onNavigateToProcessing }
               <span>SIH Core Evaluation Notice</span>
             </div>
             <p className="text-[11px] leading-relaxed text-amber-900/90">
-              In BhoomiAI, <strong>Extraction is only stage 4 of 6</strong>. The validation engine (Stage 5) actively queries the existing database to catch title collisions, parent parcel area inflations, and chronological anomalies before approval.
+              In Bhoomi Setu AI, <strong>Extraction is only stage 4 of 6</strong>. The validation engine (Stage 5) actively queries the existing database to catch title collisions, parent parcel area inflations, and chronological anomalies before approval.
             </p>
           </div>
         </div>

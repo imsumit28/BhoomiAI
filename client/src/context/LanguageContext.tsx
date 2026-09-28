@@ -10,7 +10,7 @@ interface LanguageContextType {
 
 const translations: Record<DocumentLanguage, Record<string, string>> = {
   English: {
-    appTitle: 'BhoomiAI',
+    appTitle: 'Bhoomi Setu AI',
     appSubtitle: 'Intelligent Land Record Digitization & Validation Platform',
     dashboard: 'Dashboard',
     documents: 'Document Upload & Pipeline',
@@ -31,7 +31,7 @@ const translations: Record<DocumentLanguage, Record<string, string>> = {
     quickDemoScenario: '⚡ Interactive Demo Tour',
   },
   Hindi: {
-    appTitle: 'भूमि-एआई (BhoomiAI)',
+    appTitle: 'भूमि सेतु एआई (Bhoomi Setu AI)',
     appSubtitle: 'बुद्धिमान भू-अभिलेख डिजिटलीकरण एवं सत्यापन मंच',
     dashboard: 'डैशबोर्ड (Dashboard)',
     documents: 'दस्तावेज़ अपलोड व प्रसंस्करण',
@@ -52,7 +52,7 @@ const translations: Record<DocumentLanguage, Record<string, string>> = {
     quickDemoScenario: '⚡ 3-मिनट लाइव डेमो टूर',
   },
   Marathi: {
-    appTitle: 'भूमी-एआय (BhoomiAI)',
+    appTitle: 'भूमी सेतु एआय (Bhoomi Setu AI)',
     appSubtitle: 'जमीन महसूल अभिलेख डिजिटलायझेशन आणि पडताळणी प्रणाली',
     dashboard: 'डॅशबोर्ड',
     documents: 'कागदपत्रे अपलोड आणि प्रक्रिया',
@@ -73,7 +73,7 @@ const translations: Record<DocumentLanguage, Record<string, string>> = {
     quickDemoScenario: '⚡ थेट डेमो टूअर',
   },
   Tamil: {
-    appTitle: 'பூமிAI (BhoomiAI)',
+    appTitle: 'பூமி சேது AI (Bhoomi Setu AI)',
     appSubtitle: 'நில ஆவண டிஜிட்டல்மயமாக்கல் மற்றும் சரிபார்ப்பு தளம்',
     dashboard: 'டாஷ்போர்டு',
     documents: 'ஆவணப் பதிவேற்றம்',
@@ -94,7 +94,7 @@ const translations: Record<DocumentLanguage, Record<string, string>> = {
     quickDemoScenario: '⚡ நேரலை டெமோ',
   },
   Telugu: {
-    appTitle: 'భూమిAI (BhoomiAI)',
+    appTitle: 'భూమి సేతు AI (Bhoomi Setu AI)',
     appSubtitle: 'భూ రికార్డుల డిజిటలైజేషన్ మరియు ధృవీకరణ వేదిక',
     dashboard: 'డాష్‌బోర్డ్',
     documents: 'పత్రాల అప్‌లోడ్',
@@ -115,7 +115,7 @@ const translations: Record<DocumentLanguage, Record<string, string>> = {
     quickDemoScenario: '⚡ లైవ్ డెమో టూర్',
   },
   Bengali: {
-    appTitle: 'ভূমিএআই (BhoomiAI)',
+    appTitle: 'ভূমি সেতু AI (Bhoomi Setu AI)',
     appSubtitle: 'স্মার্ট খতিয়ান ও জমি রেকর্ড যাচাইকরণ প্ল্যাটফর্ম',
     dashboard: 'ড্যাশবোর্ড',
     documents: 'নথি আপলোড ও প্রক্রিয়াকরণ',

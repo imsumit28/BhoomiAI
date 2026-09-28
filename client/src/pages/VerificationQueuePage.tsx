@@ -100,6 +100,12 @@ export const VerificationQueuePage: React.FC<VerificationQueuePageProps> = ({ on
     }
   };
 
+  useEffect(() => {
+    const shouldOpenReview = new URLSearchParams(window.location.search).get('review') === '1';
+    if (!shouldOpenReview || loading || tasks.length === 0 || selectedTask) return;
+    void openTaskModal(tasks[0]);
+  }, [loading, tasks, selectedTask]);
+
   const handleResolveTask = async (action: 'verify' | 'reject') => {
     if (!selectedTask || !taskDetails) return;
     setSubmitting(true);

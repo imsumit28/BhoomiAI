@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { UserRole } from '../../../../shared/types';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'bhoomi_ai_sih2026_secret_key_gov_portal';
+const JWT_SECRET = process.env.JWT_SECRET || 'bhoomi_setu_ai_sih2026_secret_key_gov_portal';
 
 export interface AuthRequest extends Request {
   user?: {

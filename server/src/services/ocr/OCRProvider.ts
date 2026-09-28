@@ -27,7 +27,7 @@ export interface OCRProvider {
 }
 
 export class MockOCRProvider implements OCRProvider {
-  name = 'BhoomiAI Hybrid Indic-OCR (Demo Provider)';
+  name = 'Bhoomi Setu AI Hybrid Indic-OCR (Demo Provider)';
 
   async extractText(
     documentPath: string,
@@ -137,7 +137,7 @@ export class TesseractOCRProvider implements OCRProvider {
 }
 
 export class CloudVisionOCRProvider implements OCRProvider {
-  name = 'Bhoomi Bhashini / Cloud Indic OCR';
+  name = 'Bhoomi Setu AI / Bhashini Cloud Indic OCR';
   async extractText(documentPath: string, language: DocumentLanguage = 'Hindi'): Promise<OCRResult> {
     const mock = new MockOCRProvider();
     return mock.extractText(documentPath, language);

@@ -30,7 +30,7 @@ export interface ExtractionProvider {
 }
 
 export class MockExtractionProvider implements ExtractionProvider {
-  name = 'BhoomiAI Neural Indic Entity Extractor v2.4 (Demo Provider)';
+  name = 'Bhoomi Setu AI Neural Indic Entity Extractor v2.4 (Demo Provider)';
 
   async extractLandRecord(ocrResult: OCRResult, _language: DocumentLanguage = 'Hindi'): Promise<ExtractionResult> {
     const raw = ocrResult.rawText;

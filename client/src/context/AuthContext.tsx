@@ -15,7 +15,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('bhoomi_token'));
+  const [token, setToken] = useState<string | null>(localStorage.getItem('bhoomi_setu_ai_token'));
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     try {
       const data = await api.login(email, pass);
-      localStorage.setItem('bhoomi_token', data.token);
+      localStorage.setItem('bhoomi_setu_ai_token', data.token);
       setToken(data.token);
       setUser(data.user);
     } finally {
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     try {
       const data = await api.quickDemoLogin(role);
-      localStorage.setItem('bhoomi_token', data.token);
+      localStorage.setItem('bhoomi_setu_ai_token', data.token);
       setToken(data.token);
       setUser(data.user);
     } catch {
@@ -94,7 +94,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = () => {
-    localStorage.removeItem('bhoomi_token');
+    localStorage.removeItem('bhoomi_setu_ai_token');
     setToken(null);
     setUser(null);
   };

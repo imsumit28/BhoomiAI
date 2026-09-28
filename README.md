@@ -1,6 +1,6 @@
-# BhoomiAI
+# Bhoomi Setu AI
 
-BhoomiAI is a prototype for digitizing and validating land records. It combines a React dashboard with an Express API, MongoDB-backed records, document uploads, validation workflows, and role-based demo access.
+Bhoomi Setu AI is a prototype for digitizing and validating land records. It combines a React dashboard with an Express API, MongoDB-backed records, document uploads, validation workflows, and role-based demo access.
 
 ## Features
 

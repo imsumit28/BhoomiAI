@@ -48,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({ onStartDemoTour }) => {
             <div>
               <div className="flex items-center space-x-2">
                   <span className="text-xl font-bold text-[#17324D] tracking-tight flex items-center">
-                  Bhoomi<span className="text-[#046A38]">AI</span>
+                  Bhoomi Setu <span className="text-[#046A38]">AI</span>
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-medium">

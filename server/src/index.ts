@@ -58,7 +58,7 @@ app.use('/api', apiRouter);
 app.get('/api/health', (_req, res) => {
   res.json({
     status: 'ok',
-    service: 'BhoomiAI - Intelligent Land Record Digitization & Validation System',
+    service: 'Bhoomi Setu AI - Intelligent Land Record Digitization & Validation System',
     version: '1.0.0 (SIH 2026)',
     timestamp: new Date().toISOString(),
   });
@@ -79,7 +79,7 @@ async function startServer() {
     server.listen(PORT, () => {
       console.log(`
 ============================================================
-🏛️  BHOOMI-AI: Intelligent Land Record Digitization Platform
+🏛️  BHOOMI SETU AI: Intelligent Land Record Digitization Platform
     SIH26018 - Ministry of Rural Development
     Server running on: http://localhost:${PORT}
     API Endpoint:      http://localhost:${PORT}/api
@@ -88,7 +88,7 @@ async function startServer() {
       `);
     });
   } catch (err) {
-    console.error('Failed to start BhoomiAI server:', err);
+    console.error('Failed to start Bhoomi Setu AI server:', err);
     process.exit(1);
   }
 }
