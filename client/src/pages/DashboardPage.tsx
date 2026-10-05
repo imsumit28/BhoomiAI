@@ -27,7 +27,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { api } from '../services/api';
+import { api, isDashboardSampleDataActive } from '../services/api';
 import { DashboardStats } from '../../../shared/types';
 import { ValidationBadge, VerificationBadge } from '../components/common/ValidationBadge';
 import { ConfidenceBadge } from '../components/common/ConfidenceBadge';
@@ -45,12 +45,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onStar
   const { t } = useLanguage();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [usingSampleData, setUsingSampleData] = useState(false);
 
   const loadStats = async () => {
     setLoading(true);
     try {
       const data = await api.getDashboardStats();
       setStats(data);
+      setUsingSampleData(isDashboardSampleDataActive());
     } catch (err) {
       console.error('Failed to fetch dashboard statistics:', err);
     } finally {
@@ -64,6 +66,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onStar
 
   return (
     <div className="space-y-6 pb-12">
+      {usingSampleData && (
+        <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-900">
+          Showing frontend sample dashboard data. Connect the backend to replace these prototype values with live data.
+        </div>
+      )}
       {/* Dashboard heading */}
       <div className="bg-white border border-slate-200 rounded-md px-5 py-5 md:px-7 md:py-6 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">

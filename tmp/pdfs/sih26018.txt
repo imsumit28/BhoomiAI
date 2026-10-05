@@ -1,0 +1,196 @@
+
+
+===== SLIDE 1 =====
+
+CODEXX SMART INDIA HACKATHON 2026
+Basic Details
+Problem Statement ID – SIH26018
+Problem Statement Title – Intelligent Land Record Digitization and Validation System
+PS Category – Software
+Theme – Smart Automation
+Team ID – 128414
+Team Name – CODEXX
+SIH Idea Submission  |  VIT Bhopal University 1
+
+
+===== SLIDE 2 =====
+
+CODEXX
+SIH Idea Submission  |  VIT Bhopal University 2
+Challenges and Problems
+Proposed Solution — BhoomiSetu AI
+Upload → Preprocess → OCR → Layout → Extraction → Confidence → Validation →
+Human Review → Digital Record → GIS/LRMS
+Innovation & Uniqueness
+How It Addresses the Problems
+Manual digitization →
+ Automated AI extraction
+Poor OCR certainty →
+ Confidence scoring
+Review overload →
+ Risk-based review queue
+Duplicate / inconsistent records →
+ Rule + cross-record validation
+Disconnected records →
+ API + LRMS / DILRMP / GIS
+No auditability →
+ Version history + audit trail
+Legacy paper & scanned records – historical land records exist as handwritten registers,
+scanned images, PDFs and maps that are not searchable or machine-readable
+Poor document quality – faded ink, damaged pages, noise, skewed scans and inconsistent
+layouts sharply reduce OCR reliability
+Multilingual & handwritten text – records mix several Indian languages and scripts with
+handwritten entries and annotations
+Manual data entry – human transcription is slow, expensive and error-prone, creating
+backlogs in land record offices
+Unstructured land data – owner names, survey/khasra/khata numbers, areas, mutations and
+classifications appear in varying formats
+Validation & duplicates – digitized data must be checked for inconsistencies, duplicate
+survey numbers and ownership conflicts
+Disconnected systems – digital records need interoperability with LRMS, DILRMP,
+GIS/cadastral maps and government databases
+End-to-end AI pipeline – ingests scanned registers, handwritten pages, legacy PDFs and
+maps, cleans them and converts multilingual text into structured land-record fields
+Confidence-aware, never blind OCR – every field carries a confidence score and passes
+rule, duplicate and cross-record / GIS checks before acceptance
+Risk-based human verification – officers see only low-confidence or conflicting fields
+beside the source image, then approve, correct or reject
+Trusted, connected output – versioned records with audit trail are exposed via APIs to
+LRMS, DILRMP and GIS; corrections continuously improve the models
+Bhoomi Setu AI
+
+===== SLIDE 3 =====
+
+TECHNICAL APPROACH
+SIH Idea Submission  |  VIT Bhopal University
+Methodology and Process
+Technology Stack
+BhoomiSetu AI System Workflow
+React TypeScript Vite Tailwind CSS
+Express MongoDB + Mongoose Socket.IO JWT
+1. Document Ingestion – upload scanned PDFs, images, registers and
+legacy files; originals kept in a secure archive
+2. Image Enhancement – denoise, deskew, contrast-correct and crop
+pages so faded or damaged scans become readable
+3. Layout & Region Detection – detect tables, headers, form fields and
+handwritten regions to preserve structure
+4. Multilingual OCR – script detection routes printed and handwritten text
+to suitable Indic OCR / HTR models
+5. AI Field Extraction – NLP and layout-aware Document AI map text to
+owner, survey / khasra / khata no., area, mutation
+6. Confidence Scoring – each field gets a score; uncertain values are
+highlighted, not trusted blindly
+7. Validation Engine – business rules, duplicate detection and cross-record
+database checks flag conflicts
+8. Human Verification & Learning – officers fix low-confidence fields
+side by side; corrections retrain the models
+3
+CODEXX
+
+===== SLIDE 4 =====
+
+CODEXX FEASIBILITY AND VIABILITY
+SIH Idea Submission  |  VIT Bhopal University 4
+Strategies for Overcoming Challenges
+TECHNICAL CHALLENGES
+GOVERNANCE & ADOPTION CHALLENGES
+OPERATIONAL CHALLENGES
+Poor scans – Enhancement + OCR ensemble
+Handwriting – HTR models + human check
+Multiple formats – Configurable templates
+Multilingual – Language detection + OCR
+Legacy systems – API adapters, phased migration
+Data ownership – RBAC and governance
+Trust in AI – Confidence + human approval
+Workflows – Assisted onboarding
+Low digital literacy – Simple multilingual UI
+Large volumes – Async processing queues
+Weak networks – Resumable uploads
+Sensitive records – Encryption + RBAC + Audit log
+
+===== SLIDE 5 =====
+
+CODEXX IMPACT AND BENEFITS
+SIH Idea Submission  |  VIT Bhopal University 5
+Impact on Target Audience
+Citizens / Landowners
+Faster verified records, less paperwork,
+easy search, transparency
+Revenue Officers
+Automated extraction, prioritized queue,
+faster processing, auditability
+Land Administration
+Standardized records, monitoring, less
+manual load, better data quality
+Government / Planners
+Reliable datasets, GIS integration, land-
+use planning, data-driven governance
+Benefits of the Solution
+Economic – less manual digitization effort and processing time
+Social – accessible, transparent land information
+Governance – audit trails, validation, decision support
+Digital transformation – legacy records become interoperable digital assets
+Data quality & trust – human verification of uncertain fields keeps final records reliable.
+Continuous improvement – officer corrections feed back to improve the models over
+time.
+Business / Adoption Model
+Primary Users
+Revenue depts • Land
+record offices •
+Operators • Verifiers
+Government /
+Integration
+DoLR • State revenue
+depts • LRMS •
+DILRMP • GIS
+Ecosystem Partners
+Cloud • OCR/AI • GIS
+providers • System
+integrators
+Value-Added Services
+Scalability
+PILOT
+ STATE
+ MULTI-STATE
+ NATIONAL
+Controlled pilot → validate extraction and verification quality → integrate with
+existing systems → scale with configurable language, document and state-specific
+rules.
+Confidence & validation reports -field-level scores and flagged issues per record.
+GIS-abased record visualization -verified records linked to parcel and cadastral maps.
+Mutation & history tracking - version history and audit trail of every change.
+Analytics dashboards - progress review queue load error trends and data quality by district.
+APIs for government applications - secure interfaces for LRMS, DILRMP and other
+systems.
+Searchable land-record repository -search by owner, survey/khasra/khata no. or village
+       with the original scan alongside.
+
+===== SLIDE 6 =====
+
+CODEXX RESEARCH, REFERENCES & PROTOTYPE
+SIH Idea Submission  |  VIT Bhopal University 6
+Prototype / UI — Intelligent Land Record Platform Research & References
+[1] DoLR, Digital India Land Records Modernization Programme
+(DILRMP), Govt. of India.
+https://dolr.gov.in/en/programmes-schemes/dilrmp-2/
+[2] DoLR, DILRMP 3.0 Operational Guidelines (2026–2031), Govt. of
+India.
+https://dolr.gov.in/en/document/digital-india-land-records-modernization-
+programmedilrmp-3-0-operational-guidelines-2026-2031/
+[3] DoLR, Unique Land Parcel Identification Number (ULPIN), Govt. of
+India.
+https://dolr.gov.in/en/ulpin/
+[4] DoLR, NAKSHA – GIS Integrated Land Records, Govt. of India.
+https://dolr.gov.in/en/about-naksha/
+[5] Xu et al., “LayoutLM: Pre-training of Text and Layout for Document
+Image Understanding,” KDD, 2020.
+KDD 2020 – LayoutLM
+[6] Li et al., “TrOCR: Transformer-based Optical Character Recognition,”
+2021.
+TrOCR – arXiv
+[7] Dutta et al., “Offline Handwriting Recognition on Devanagari,” DAS,
+2018.
+https://cvit.iiit.ac.in/research/projects/cvit-projects/indic-hw-data
+[8] Gongidi & Jawahar, “IIIT-INDIC-HW-WORDS: A Dataset for Indic
+Handwritten Text Recognition,” ICDAR, 2021.
+https://cvit.iiit.ac.in/research/projects/cvit-projects/iiit-indic-hw-words

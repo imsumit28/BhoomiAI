@@ -7,8 +7,12 @@ import {
   DashboardStats,
   MasterHierarchy,
 } from '../../../shared/types';
+import { demoEnabled, sampleAuditLogs, sampleDashboardStats, sampleLandRecords, sampleValidation, sampleVerificationTasks } from './demoData';
 
 const API_BASE = '/api';
+let dashboardSampleDataActive = false;
+
+export const isDashboardSampleDataActive = () => dashboardSampleDataActive;
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('bhoomi_setu_ai_token');
@@ -111,6 +115,18 @@ export const api = {
     records: LandRecord[];
     pagination: { total: number; page: number; limit: number; totalPages: number };
   }> {
+    if (demoEnabled()) {
+      const query = String(params?.q || '').toLowerCase();
+      const village = String(params?.village || '').toLowerCase();
+      const filtered = sampleLandRecords.filter((record) =>
+        (!query || [record.recordId, record.ownerName.value, record.surveyNumber.value, record.khataNumber.value]
+          .some((value) => String(value).toLowerCase().includes(query))) &&
+        (!village || record.village.value.toLowerCase().includes(village)) &&
+        (!params?.validationStatus || record.validationStatus === params.validationStatus) &&
+        (!params?.verificationStatus || record.verificationStatus === params.verificationStatus)
+      );
+      return { records: filtered, pagination: { total: filtered.length, page: 1, limit: filtered.length, totalPages: 1 } };
+    }
     const query = new URLSearchParams(params || {}).toString();
     const res = await fetch(`${API_BASE}/land-records/search?${query}`, {
       headers: getAuthHeaders(),
@@ -124,6 +140,15 @@ export const api = {
     auditLogs: AuditLog[];
     siblingRecords: any[];
   }> {
+    if (demoEnabled()) {
+      const record = sampleLandRecords.find((item) => item.recordId === id) || sampleLandRecords[0];
+      return {
+        record,
+        validation: sampleValidation(record.recordId),
+        auditLogs: sampleAuditLogs.filter((log) => log.recordId === record.recordId),
+        siblingRecords: sampleLandRecords.filter((item) => item.recordId !== record.recordId),
+      };
+    }
     const res = await fetch(`${API_BASE}/land-records/${id}`, {
       headers: getAuthHeaders(),
     });
@@ -142,6 +167,7 @@ export const api = {
 
   // Validations
   async validateRecord(id: string): Promise<{ result: ValidationResult }> {
+    if (demoEnabled()) return { result: sampleValidation(id) };
     const res = await fetch(`${API_BASE}/land-records/${id}/validate`, {
       method: 'POST',
       headers: getAuthHeaders(),
@@ -150,6 +176,10 @@ export const api = {
   },
 
   async getValidationResult(recordId: string): Promise<{ result: ValidationResult; record: LandRecord }> {
+    if (demoEnabled()) {
+      const record = sampleLandRecords.find((item) => item.recordId === recordId) || sampleLandRecords[0];
+      return { result: sampleValidation(record.recordId), record };
+    }
     const res = await fetch(`${API_BASE}/validations/${recordId}`, {
       headers: getAuthHeaders(),
     });
@@ -168,6 +198,20 @@ export const api = {
     tasks: VerificationTask[];
     stats: { pending: number; inReview: number; verified: number; rejected: number; urgent: number };
   }> {
+    if (demoEnabled()) {
+      const filtered = sampleVerificationTasks.filter((task) => {
+        const text = `${task.ownerName} ${task.recordId} ${task.surveyNumber} ${task.village}`.toLowerCase();
+        const categoryMatch = !params?.filterType || params.filterType === 'all' ||
+          (params.filterType === 'critical' && task.priority === 'urgent') ||
+          (params.filterType === 'low_confidence' && task.overallConfidence < 70) ||
+          (params.filterType === 'conflict' && task.flagReasons.some((reason) => /conflict|ownership/i.test(reason))) ||
+          (params.filterType === 'area_mismatch' && task.flagReasons.some((reason) => /area/i.test(reason))) ||
+          (params.filterType === 'duplicate' && task.flagReasons.some((reason) => /duplicate/i.test(reason)));
+        return categoryMatch && (!params?.priority || task.priority === params.priority) &&
+          (!params?.search || text.includes(String(params.search).toLowerCase()));
+      });
+      return { tasks: filtered, stats: { pending: 1, inReview: 1, verified: 0, rejected: 0, urgent: 1 } };
+    }
     const query = new URLSearchParams(params || {}).toString();
     const res = await fetch(`${API_BASE}/verification/queue?${query}`, {
       headers: getAuthHeaders(),
@@ -181,6 +225,11 @@ export const api = {
     validation: ValidationResult;
     document?: IDocument;
   }> {
+    if (demoEnabled()) {
+      const task = sampleVerificationTasks.find((item) => item.taskId === taskId) || sampleVerificationTasks[0];
+      const record = sampleLandRecords.find((item) => item.recordId === task.recordId) || sampleLandRecords[1];
+      return { task, record, validation: sampleValidation(record.recordId) };
+    }
     const res = await fetch(`${API_BASE}/verification/tasks/${taskId}`, {
       headers: getAuthHeaders(),
     });
@@ -202,6 +251,16 @@ export const api = {
     logs: AuditLog[];
     pagination: { total: number; page: number; limit: number; totalPages: number };
   }> {
+    if (demoEnabled()) {
+      const matching = sampleAuditLogs.filter((log) =>
+        (!params?.action || log.action === params.action) &&
+        (!params?.recordId || `${log.recordId || ''} ${log.documentId || ''}`.toLowerCase().includes(String(params.recordId).toLowerCase()))
+      );
+      return {
+        logs: matching,
+        pagination: { total: matching.length, page: Number(params?.page || 1), limit: matching.length, totalPages: 1 },
+      };
+    }
     const query = new URLSearchParams(params || {}).toString();
     const res = await fetch(`${API_BASE}/audit/logs?${query}`, {
       headers: getAuthHeaders(),
@@ -211,10 +270,26 @@ export const api = {
 
   // Analytics & Learning Loop
   async getDashboardStats(): Promise<DashboardStats> {
-    const res = await fetch(`${API_BASE}/analytics/dashboard`, {
-      headers: getAuthHeaders(),
-    });
-    return res.json();
+    if (demoEnabled()) {
+      dashboardSampleDataActive = true;
+      return sampleDashboardStats;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/analytics/dashboard`, { headers: getAuthHeaders() });
+      if (!res.ok) {
+        dashboardSampleDataActive = true;
+        return sampleDashboardStats;
+      }
+      const data = await res.json();
+      const hasDashboardData = typeof data?.totalDocuments === 'number' &&
+        Array.isArray(data?.timelineData) && Array.isArray(data?.confidenceDistribution) &&
+        Array.isArray(data?.errorCategoryDistribution) && Array.isArray(data?.stateWiseStats);
+      dashboardSampleDataActive = !hasDashboardData;
+      return hasDashboardData ? data : sampleDashboardStats;
+    } catch {
+      dashboardSampleDataActive = true;
+      return sampleDashboardStats;
+    }
   },
 
   async getLearningLoopMetrics(): Promise<any> {
