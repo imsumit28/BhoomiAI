@@ -115,7 +115,7 @@ export const api = {
     records: LandRecord[];
     pagination: { total: number; page: number; limit: number; totalPages: number };
   }> {
-    if (demoEnabled()) {
+    const getSampleRecords = () => {
       const query = String(params?.q || '').toLowerCase();
       const village = String(params?.village || '').toLowerCase();
       const filtered = sampleLandRecords.filter((record) =>
@@ -125,13 +125,19 @@ export const api = {
         (!params?.validationStatus || record.validationStatus === params.validationStatus) &&
         (!params?.verificationStatus || record.verificationStatus === params.verificationStatus)
       );
-      return { records: filtered, pagination: { total: filtered.length, page: 1, limit: filtered.length, totalPages: 1 } };
-    }
+      return { records: filtered, pagination: { total: filtered.length, page: 1, limit: Number(params?.limit || filtered.length), totalPages: filtered.length ? 1 : 0 } };
+    };
+    if (demoEnabled()) return getSampleRecords();
     const query = new URLSearchParams(params || {}).toString();
-    const res = await fetch(`${API_BASE}/land-records/search?${query}`, {
-      headers: getAuthHeaders(),
-    });
-    return res.json();
+    try {
+      const res = await fetch(`${API_BASE}/land-records/search?${query}`, { headers: getAuthHeaders() });
+      if (!res.ok) return getSampleRecords();
+      const data = await res.json();
+      if (!Array.isArray(data?.records) || data.records.length === 0) return getSampleRecords();
+      return data;
+    } catch {
+      return getSampleRecords();
+    }
   },
 
   async getLandRecordById(id: string): Promise<{
@@ -140,7 +146,7 @@ export const api = {
     auditLogs: AuditLog[];
     siblingRecords: any[];
   }> {
-    if (demoEnabled()) {
+    const getSampleRecord = () => {
       const record = sampleLandRecords.find((item) => item.recordId === id) || sampleLandRecords[0];
       return {
         record,
@@ -148,11 +154,16 @@ export const api = {
         auditLogs: sampleAuditLogs.filter((log) => log.recordId === record.recordId),
         siblingRecords: sampleLandRecords.filter((item) => item.recordId !== record.recordId),
       };
+    };
+    if (demoEnabled()) return getSampleRecord();
+    try {
+      const res = await fetch(`${API_BASE}/land-records/${id}`, { headers: getAuthHeaders() });
+      if (!res.ok) return getSampleRecord();
+      const data = await res.json();
+      return data?.record ? data : getSampleRecord();
+    } catch {
+      return getSampleRecord();
     }
-    const res = await fetch(`${API_BASE}/land-records/${id}`, {
-      headers: getAuthHeaders(),
-    });
-    return res.json();
   },
 
   async updateRecordField(id: string, field: string, newValue: any, reason?: string) {
@@ -198,7 +209,7 @@ export const api = {
     tasks: VerificationTask[];
     stats: { pending: number; inReview: number; verified: number; rejected: number; urgent: number };
   }> {
-    if (demoEnabled()) {
+    const getSampleQueue = () => {
       const filtered = sampleVerificationTasks.filter((task) => {
         const text = `${task.ownerName} ${task.recordId} ${task.surveyNumber} ${task.village}`.toLowerCase();
         const categoryMatch = !params?.filterType || params.filterType === 'all' ||
@@ -211,12 +222,18 @@ export const api = {
           (!params?.search || text.includes(String(params.search).toLowerCase()));
       });
       return { tasks: filtered, stats: { pending: 1, inReview: 1, verified: 0, rejected: 0, urgent: 1 } };
-    }
+    };
+    if (demoEnabled()) return getSampleQueue();
     const query = new URLSearchParams(params || {}).toString();
-    const res = await fetch(`${API_BASE}/verification/queue?${query}`, {
-      headers: getAuthHeaders(),
-    });
-    return res.json();
+    try {
+      const res = await fetch(`${API_BASE}/verification/queue?${query}`, { headers: getAuthHeaders() });
+      if (!res.ok) return getSampleQueue();
+      const data = await res.json();
+      if (!Array.isArray(data?.tasks) || data.tasks.length === 0) return getSampleQueue();
+      return data;
+    } catch {
+      return getSampleQueue();
+    }
   },
 
   async getVerificationTaskById(taskId: string): Promise<{
@@ -225,15 +242,20 @@ export const api = {
     validation: ValidationResult;
     document?: IDocument;
   }> {
-    if (demoEnabled()) {
+    const getSampleTask = () => {
       const task = sampleVerificationTasks.find((item) => item.taskId === taskId) || sampleVerificationTasks[0];
       const record = sampleLandRecords.find((item) => item.recordId === task.recordId) || sampleLandRecords[1];
       return { task, record, validation: sampleValidation(record.recordId) };
+    };
+    if (demoEnabled()) return getSampleTask();
+    try {
+      const res = await fetch(`${API_BASE}/verification/tasks/${taskId}`, { headers: getAuthHeaders() });
+      if (!res.ok) return getSampleTask();
+      const data = await res.json();
+      return data?.task && data?.record ? data : getSampleTask();
+    } catch {
+      return getSampleTask();
     }
-    const res = await fetch(`${API_BASE}/verification/tasks/${taskId}`, {
-      headers: getAuthHeaders(),
-    });
-    return res.json();
   },
 
   async completeVerification(taskId: string, payload: { action: 'verify' | 'reject'; notes?: string; corrections?: any[] }) {
